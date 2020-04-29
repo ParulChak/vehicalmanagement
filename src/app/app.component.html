@@ -1,0 +1,69 @@
+<div>
+    <h2 class="text-center bg-dark text-light p-0 m-0">{{title}}</h2>
+</div>
+<div class="container-fluid">
+
+    <div class="row bg-light">
+        <div class="col-2 text-center">
+            <a  (click)="totalTruckListWithNo()">
+                Total Truck <p class="text-muted">{{totalTruck}}</p>
+            </a>
+        </div>
+        <div class="col-2 text-center">
+            <a  (click)="runningTruckListWithNo()">
+                Running Truck <p class="text-muted">{{runningTruckNo}}</p>
+            </a>
+        </div>
+        <div class="col-2 text-center">
+            <a (click)="stoppedTruckListWithNo()">
+                Stopped Truck <p class="text-muted">{{stoppedTruckNo}}</p>
+            </a>
+        </div>
+        <div class="col-2 text-center">
+            <a (click)="idleTruckListWithNo()">
+                Idle Truck <p class="text-muted">{{idleTruckNo}}</p>
+            </a>
+        </div>
+        <div class="col-2 text-center">
+            <a (click)="errorTruckListWithNo()">
+                Error Truck <p class="text-muted">{{errorTruckNo}}</p>
+            </a>
+        </div>
+        <div class="col-2 text-center" style="margin-top: 12px;">
+           
+                <ng-multiselect-dropdown [placeholder]=" 'TrucksList..' " [data]="trucksData"
+                    [settings]="dropdownSettings"  (onSelect)="onItemSelect($event)" (onDeSelect)="onDeSelect($event)">
+                </ng-multiselect-dropdown>
+                
+            
+        </div>
+    </div>
+
+
+
+    <div class="row ">
+        <div class="col-3  " style="padding:0;"  >
+            <input type="text" [(ngModel)]="term" class="form-control" placeholder="Search Truck..">
+            <div class="list" id="style-2"><ul *ngFor="let i of trucknumber |filter:term" class="list-group" >
+                <li class="list-group-item" [ngStyle]="{'background-color':getColor(i)}"> 
+                    {{i.truckNumber}} <i class="fa fa-truck" aria-hidden="true"></i>
+                    <p *ngIf="getRunningTruckTime(i)">running </p>
+                    <p *ngIf="getStoppedTruckTime(i)">stopped </p>
+                    <p *ngIf="getErrorTruckTime(i)">error</p>
+                    <p *ngIf="getIdleTruckTime(i)">idle by</p>
+                </li>
+            </ul>
+        </div>
+            
+        </div>
+        <div class="col-9 " style="padding: 0;">
+            <!-- <img src="" alt="Google Map"> -->
+
+
+            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+                <agm-marker *ngFor="let m of markers" [latitude]="m.lat" [longitude]="m.lng" [iconUrl]="m.icon">     </agm-marker>
+            </agm-map>
+        </div>
+    </div>
+</div>
+
